@@ -24,7 +24,7 @@ public class KeyboardManager : MonoBehaviour
 
     void Typing_Performed(char a)
     {
-        Debug.Log(a);
+        //Debug.Log(a);
         currentKey = a;
     }
 

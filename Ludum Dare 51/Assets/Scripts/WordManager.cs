@@ -78,11 +78,13 @@ public class WordManager : MonoBehaviour
            
         }
         currentWordList.Clear();
-        Debug.Log(currentWordList.Count);
+        //Debug.Log("currentWordList count: " + currentWordList.Count);
 
+        //  This means that you have finished the level >>>>>>> TODO: make this a next level function
         if (words.Count == 0)
         {
             Debug.Log("Out of words!");
+            StopAllCoroutines();
             yield break;
         }
 
@@ -101,6 +103,8 @@ public class WordManager : MonoBehaviour
                 currentWordList.Add(currentChar);
         }
 
+        StopAllCoroutines();
+        StartCoroutine(Timer.Countdown());
         StartCoroutine(CheckLetters());
 
     }
