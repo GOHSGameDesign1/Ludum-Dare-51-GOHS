@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class WordManager : MonoBehaviour
 {
     private List<TMP_Text> currentWordList = new List<TMP_Text>();
+    private int letterIndex;
+    private bool currentLetterCorrect;
 
     public List<string> words;
 
@@ -13,9 +16,11 @@ public class WordManager : MonoBehaviour
     private WaitForFixedUpdate waitTime = new WaitForFixedUpdate();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SetupNextWord(words[0]);
+        letterIndex = 0;
+        currentLetterCorrect = false;
     }
 
     // Update is called once per frame
@@ -24,33 +29,31 @@ public class WordManager : MonoBehaviour
 
     }
 
-    // checks if the current keyboard press is the same as the word, if the current word is finished, load a new word
-    /*void checkLetters()
+    private void OnEnable()
     {
-        if (currentWordQueue.Count == 0)
+        KeyboardManager.keyPressed += CheckLetterCorrect;
+    }
+
+    private void OnDisable()
+    {
+        KeyboardManager.keyPressed -= CheckLetterCorrect;
+    }
+
+    // checks if the keypressed was the correct letter at the correct index
+    void CheckLetterCorrect(char a)
+    {
+        if (KeyboardManager.currentKey.ToString().ToUpper() == currentWordList[letterIndex].text)
         {
-            if (currentString != null)
-            {
-                Destroy(currentString.gameObject);
-            }
-
-            if (words.Count == 0)
-            {
-                Debug.Log("Out of words!");
-                check = false;
-                return;
-            }
-
-            SetupNextWord(words[0]);
+            Debug.Log("Correct Letter");
+            currentWordList[letterIndex].GetComponentInParent<SpriteRenderer>().color = new Color(1, 0, 0, 0f);
+            currentLetterCorrect = true;
         }
-
-        if (KeyboardManager.currentKey.ToString() == currentWordList[letterCount].text)
+        else
         {
-            //Debug.Log("Removing: " + currentWordQueue.Dequeue());
-            currentWordList.Dequeue();
-            KeyboardManager.currentKey = '|';
+            Debug.Log("Incorrect");
+            currentWordList[letterIndex].GetComponentInParent<SpriteRenderer>().color = new Color(1, 0, 0, 0.19f);
         }
-    } */
+    }
 
     IEnumerator CheckLetters()
     {
@@ -59,10 +62,12 @@ public class WordManager : MonoBehaviour
         {
             while (true)
             {
-                if (KeyboardManager.currentKey.ToString().ToUpper() == currentWordList[i].text)
+                if (currentLetterCorrect == true)
                 {
                     //Debug.Log("Removing: " + currentWordQueue.Dequeue());
-                    currentWordList[i].color = Color.black;
+                    currentLetterCorrect = false;
+                    letterIndex++;
+                    currentWordList[i].color = Color.green;
                     KeyboardManager.currentKey = '|'; // filler key
                     break;
                 }
@@ -71,6 +76,7 @@ public class WordManager : MonoBehaviour
             }
         }
 
+        letterIndex = 0;
         // destroys each letter after it has been fully typed >>>>>> TODO: Make this a destroy function
         foreach (TMP_Text letter in currentWordList)
         {
