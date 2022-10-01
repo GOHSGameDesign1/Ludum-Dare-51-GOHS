@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class WordManager : MonoBehaviour
 {
-    private List<TMP_Text> currentWordList = new List<TMP_Text>();
+    private List<Letter> currentWordList = new List<Letter>();
     private int letterIndex;
     private bool currentLetterCorrect;
 
@@ -42,16 +42,16 @@ public class WordManager : MonoBehaviour
     // checks if the keypressed was the correct letter at the correct index
     void CheckLetterCorrect(char a)
     {
-        if (KeyboardManager.currentKey.ToString().ToUpper() == currentWordList[letterIndex].text)
+        if (KeyboardManager.currentKey.ToString().ToUpper() == currentWordList[letterIndex].tmpText.text)
         {
             Debug.Log("Correct Letter");
-            currentWordList[letterIndex].GetComponentInParent<SpriteRenderer>().color = new Color(1, 0, 0, 0f);
+            currentWordList[letterIndex].FlashGreen();
             currentLetterCorrect = true;
         }
         else
         {
             Debug.Log("Incorrect");
-            currentWordList[letterIndex].GetComponentInParent<SpriteRenderer>().color = new Color(1, 0, 0, 0.19f);
+            currentWordList[letterIndex].FlashRed();
         }
     }
 
@@ -65,9 +65,9 @@ public class WordManager : MonoBehaviour
                 if (currentLetterCorrect == true)
                 {
                     //Debug.Log("Removing: " + currentWordQueue.Dequeue());
+
                     currentLetterCorrect = false;
                     letterIndex++;
-                    currentWordList[i].color = Color.green;
                     KeyboardManager.currentKey = '|'; // filler key
                     break;
                 }
@@ -76,15 +76,7 @@ public class WordManager : MonoBehaviour
             }
         }
 
-        letterIndex = 0;
-        // destroys each letter after it has been fully typed >>>>>> TODO: Make this a destroy function
-        foreach (TMP_Text letter in currentWordList)
-        {
-            Destroy(letter.transform.parent.gameObject);
-           
-        }
-        currentWordList.Clear();
-        //Debug.Log("currentWordList count: " + currentWordList.Count);
+        DestroyCurrentWord();
 
         //  This means that you have finished the level >>>>>>> TODO: make this a next level function
         if (words.Count == 0)
@@ -104,14 +96,26 @@ public class WordManager : MonoBehaviour
 
         for (int i = 0; i < word.Length; i++)
         {
-                TMP_Text currentChar = Instantiate(letterPrefab, new Vector2((float)(word.Length * -1)/2 + i, 0), Quaternion.identity, transform).GetComponentInChildren<TMP_Text>();
-                currentChar.text = word[i].ToString();
-                currentWordList.Add(currentChar);
+            Letter currentLetter = Instantiate(letterPrefab, new Vector2((float)(word.Length * -1) / 2 + i, 0), Quaternion.identity, transform).GetComponent<Letter>();
+            currentLetter.ChangeText(word[i].ToString());
+            currentWordList.Add(currentLetter);
         }
 
         StopAllCoroutines();
         StartCoroutine(Timer.Countdown());
         StartCoroutine(CheckLetters());
 
+    }
+
+    // destroys each letter, resets the letter index, and clears the current list
+    void DestroyCurrentWord()
+    {
+        letterIndex = 0;
+        foreach (Letter letter in currentWordList)
+        {
+            Destroy(letter.gameObject);
+
+        }
+        currentWordList.Clear();
     }
 }
