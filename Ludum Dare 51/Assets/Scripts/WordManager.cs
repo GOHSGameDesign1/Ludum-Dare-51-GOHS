@@ -1,54 +1,107 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WordManager : MonoBehaviour
 {
-    private Queue<char> currentWordQueue = new Queue<char>();
+    private List<TMP_Text> currentWordList = new List<TMP_Text>();
 
     public List<string> words;
+
+    public GameObject letterPrefab;
+    private WaitForFixedUpdate waitTime = new WaitForFixedUpdate();
 
     // Start is called before the first frame update
     void Start()
     {
-
+        SetupNextWord(words[0]);
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkLetters();
+
     }
 
     // checks if the current keyboard press is the same as the word, if the current word is finished, load a new word
-    void checkLetters()
+    /*void checkLetters()
     {
-        if(currentWordQueue.Count == 0)
+        if (currentWordQueue.Count == 0)
         {
+            if (currentString != null)
+            {
+                Destroy(currentString.gameObject);
+            }
+
             if (words.Count == 0)
             {
                 Debug.Log("Out of words!");
+                check = false;
                 return;
             }
 
             SetupNextWord(words[0]);
         }
 
-        if(KeyboardManager.currentKey == currentWordQueue.Peek())
+        if (KeyboardManager.currentKey.ToString() == currentWordList[letterCount].text)
         {
-            Debug.Log("Removing: " + currentWordQueue.Dequeue());
+            //Debug.Log("Removing: " + currentWordQueue.Dequeue());
+            currentWordList.Dequeue();
             KeyboardManager.currentKey = '|';
         }
+    } */
+
+    IEnumerator CheckLetters()
+    {
+        // runs through each letter to check if the key pressed at a certain frame was correct.
+        for (int i = 0; i < currentWordList.Count; i++)
+        {
+            while (true)
+            {
+                if (KeyboardManager.currentKey.ToString().ToUpper() == currentWordList[i].text)
+                {
+                    //Debug.Log("Removing: " + currentWordQueue.Dequeue());
+                    currentWordList[i].color = Color.black;
+                    KeyboardManager.currentKey = '|'; // filler key
+                    break;
+                }
+
+                yield return waitTime;
+            }
+        }
+
+        // destroys each letter after it has been fully typed >>>>>> TODO: Make this a destroy function
+        foreach (TMP_Text letter in currentWordList)
+        {
+            Destroy(letter.transform.parent.gameObject);
+           
+        }
+        currentWordList.Clear();
+        Debug.Log(currentWordList.Count);
+
+        if (words.Count == 0)
+        {
+            Debug.Log("Out of words!");
+            yield break;
+        }
+
+        SetupNextWord(words[0]);
     }
 
-    // loads a new word, if the words for the level are done print hooray
+    // loads a new word
     void SetupNextWord(string word)
     {
         words.RemoveAt(0);
-        foreach (char letter in word)
+
+        for (int i = 0; i < word.Length; i++)
         {
-            //Debug.Log("Adding: " + letter);
-            currentWordQueue.Enqueue(letter);
+                TMP_Text currentChar = Instantiate(letterPrefab, new Vector2((float)(word.Length * -1)/2 + i, 0), Quaternion.identity, transform).GetComponentInChildren<TMP_Text>();
+                currentChar.text = word[i].ToString();
+                currentWordList.Add(currentChar);
         }
+
+        StartCoroutine(CheckLetters());
+
     }
 }

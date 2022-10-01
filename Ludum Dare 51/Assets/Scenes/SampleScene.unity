@@ -153,9 +153,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   words:
-  - Hello
-  - Hey
+  - HELLO
+  - HEY
   - WAAAAAAAAAAA
+  - FUN
+  - YINEONISTETS
+  check: 0
+  letterPrefab: {fileID: 4599506568771897060, guid: 0c3c34beafdb35d4ea2de62b75c8c196, type: 3}
 --- !u!4 &238649815
 Transform:
   m_ObjectHideFlags: 0
