@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public static int timer;
+    public static float timer;
     public TMP_Text timerUI;
+    public Image timerRing;
+    public float lerpSpeed;
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,9 +21,20 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timerUI.text = timer.ToString();
+        timerRing.fillAmount = Mathf.Lerp(timerRing.fillAmount, timer/10, lerpSpeed * Time.deltaTime);
+        ColorChanger();
+
         if(timer <= 0)
         {
             Debug.Log("DEAD!!!!!");
+        }
+    }
+
+    void ColorChanger()
+    {
+        if(timer < 12)
+        {
+            timerRing.color = Color.Lerp(Color.red, Color.white, timer/10);
         }
     }
 
