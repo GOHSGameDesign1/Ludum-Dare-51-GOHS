@@ -1,0 +1,85 @@
+{
+    "name": "KeyboardInput",
+    "maps": [
+        {
+            "name": "Typing",
+            "id": "dfdf48bf-dee8-4a20-81a1-15432610f1c2",
+            "actions": [
+                {
+                    "name": "A",
+                    "type": "Value",
+                    "id": "77fd4b31-c664-4c54-9ec6-a1cedd44faca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.01)",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "B",
+                    "type": "Button",
+                    "id": "9e182faa-ede5-4686-bd1a-689f70e53cde",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "key",
+                    "type": "PassThrough",
+                    "id": "69478927-1884-41a6-b441-212cb6f795a1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "40f27fd7-6b0a-45f8-ada8-fedd3d58c5dd",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b15deceb-4cd0-487b-9e4e-0f29b5ba9f92",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "B",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "584ecc6d-fc77-4b26-802d-c1c7d8955af9",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2f3bddee-d510-4001-bdda-97badb9d4926",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
