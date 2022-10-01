@@ -7,11 +7,12 @@ public class KeyboardManager : MonoBehaviour
 {
     private Keyboard board;
     private InputAction.CallbackContext lastContext;
+    public static char currentKey;
     // Start is called before the first frame update
     void Awake()
     {
         //board = new Keyboard();
-
+        //currentKey = null;
         Keyboard.current.onTextInput += Typing_Performed;
     }
 
@@ -24,6 +25,7 @@ public class KeyboardManager : MonoBehaviour
     void Typing_Performed(char a)
     {
         Debug.Log(a);
+        currentKey = a;
     }
 
 
