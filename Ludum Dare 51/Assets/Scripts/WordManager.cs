@@ -8,7 +8,8 @@ public class WordManager : MonoBehaviour
 {
     private List<Letter> currentWordList = new List<Letter>();
     private TMP_Text currentWord;
-    private int letterIndex;
+    private string currentLetters;
+    public static int letterIndex;
     private bool currentLetterCorrect;
 
     public List<string> words;
@@ -44,11 +45,15 @@ public class WordManager : MonoBehaviour
     // checks if the keypressed was the correct letter at the correct index
     void CheckLetterCorrect(char a)
     {
-        if (KeyboardManager.currentKey == currentWord.text[letterIndex])
+
+        if (KeyboardManager.currentKey.ToString().ToUpper() == currentWord.text[letterIndex].ToString())
         {
             Debug.Log("Correct Letter");
             //currentWordList[letterIndex].FlashGreen();
             currentLetterCorrect = true;
+            currentWord.GetComponent<Letter>().red = false;
+
+            //currentWord.GetComponent<Letter>().Green();
 
             /* int vertexIndex = currentWord.textInfo.characterInfo[letterIndex].vertexIndex;
              currentWord.mesh.colors[vertexIndex] = Color.green;
@@ -65,11 +70,12 @@ public class WordManager : MonoBehaviour
              //vertexColors[vertexIndex + 3] = myColor32;
              */
 
-            currentWord.GetComponent<Letter>().FlashGreen(letterIndex);
+            //StartCoroutine(currentWord.GetComponent<Letter>().FlashGreen(letterIndex));
         }
         else
         {
             Debug.Log("Incorrect");
+            currentWord.GetComponent<Letter>().red = true;
             //currentWordList[letterIndex].FlashRed();
         }
     }
@@ -77,20 +83,27 @@ public class WordManager : MonoBehaviour
     IEnumerator CheckLetters()
     {
         // runs through each letter to check if the key pressed at a certain frame was correct.
-        for (int i = 0; i < currentWordList.Count; i++)
+        for (int i = 0; i < currentWord.text.Length; i++)
         {
             while (true)
             {
+                if (currentWord.textInfo.characterInfo[letterIndex].character == ' ')
+                {
+                    Debug.Log("SKipping space");
+                    currentLetterCorrect = true;
+                    currentWord.GetComponent<Letter>().red = false;
+
+                }
+
                 if (currentLetterCorrect == true)
                 {
-                    //Debug.Log("Removing: " + currentWordQueue.Dequeue());
+                    //Debug.Log("Removing: " + currentWord.text[i]);
 
                     currentLetterCorrect = false;
                     letterIndex++;
                     KeyboardManager.currentKey = '|'; // filler key
                     break;
                 }
-
                 yield return waitTime;
             }
         }
@@ -123,10 +136,13 @@ public class WordManager : MonoBehaviour
 
         currentWord = Instantiate(letterPrefab, wordCanvas.transform).GetComponent<TMP_Text>();
         currentWord.text = word;
+        currentLetters = currentWord.text.Replace(" ", string.Empty);
+        //currentLetters.Replace(" ", string.Empty);
+        Debug.Log(currentLetters);
 
         StopAllCoroutines();
         StartCoroutine(Timer.Countdown());
-        //StartCoroutine(CheckLetters());
+        StartCoroutine(CheckLetters());
 
 
 
@@ -136,11 +152,8 @@ public class WordManager : MonoBehaviour
     void DestroyCurrentWord()
     {
         letterIndex = 0;
-        foreach (Letter letter in currentWordList)
-        {
-            Destroy(letter.gameObject);
 
-        }
-        currentWordList.Clear();
+        Destroy(currentWord.gameObject);
+
     }
 }
