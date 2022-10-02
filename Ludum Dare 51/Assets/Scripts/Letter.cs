@@ -230,4 +230,6 @@ public class Letter : MonoBehaviour
     {
         return new Vector2(Mathf.Sin(time * 5.3f), Mathf.Cos(time * 5.3f));
     }
+
+
 }
