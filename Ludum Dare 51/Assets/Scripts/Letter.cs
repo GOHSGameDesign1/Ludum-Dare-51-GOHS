@@ -94,7 +94,7 @@ public class Letter : MonoBehaviour
                 {
                     return;
                 }
-                Vector3 lerpPos = Vector3.Lerp(new Vector3(0, -220,0), ogPos[index + j], Time.time/Time.deltaTime + j);
+                Vector3 lerpPos = Vector3.Lerp(new Vector3(0, -220,0), ogPos[index + j], Time.time * i);
 
                 //Debug.Log(ogPos);
                 //Debug.Log(rect.InverseTransformPoint(spawnPos));
@@ -105,6 +105,24 @@ public class Letter : MonoBehaviour
 
         }
         mesh.vertices = vertices;
+    }
+
+    void TextFade()
+    {
+        tmpText.ForceMeshUpdate();
+        colors = mesh.colors;
+
+        for(int i = 0; i < tmpText.textInfo.characterCount; i++)
+        {
+            TMP_CharacterInfo c = tmpText.textInfo.characterInfo[i];
+
+            int index = c.vertexIndex;
+
+            colors[index] = new Color(colors[index].r, colors[index].g, colors[index].b, colors[index].a);
+            colors[index + 1] = Color.green;
+            colors[index + 2] = Color.green;
+            colors[index + 3] = Color.green;
+        }
     }
 
     void UnderLineFollow()
