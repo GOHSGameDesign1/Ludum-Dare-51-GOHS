@@ -135,10 +135,14 @@ public class WordManager : MonoBehaviour
        // }
 
         currentWord = Instantiate(letterPrefab, wordCanvas.transform).GetComponent<TMP_Text>();
+        //currentWord.GetComponent<Letter>().ChangeText(word);
         currentWord.text = word;
+        currentWord.ForceMeshUpdate();
         currentLetters = currentWord.text.Replace(" ", string.Empty);
-        //currentLetters.Replace(" ", string.Empty);
+        currentLetters.Replace(" ", string.Empty);
+        currentWord.GetComponent<Letter>().ogPos = currentWord.mesh.vertices;
         Debug.Log(currentLetters);
+        //Debug.Log(currentWord.mesh.vertices);
 
         StopAllCoroutines();
         StartCoroutine(Timer.Countdown());

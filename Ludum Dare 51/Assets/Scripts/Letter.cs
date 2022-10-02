@@ -14,6 +14,11 @@ public class Letter : MonoBehaviour
     Vector3[] vertices;
     Color[] colors;
 
+    public Vector3[] ogPos;
+    private Vector3 spawnPos;
+
+    RectTransform rect;
+
     private SpriteRenderer render;
     // Start is called before the first frame update
     void Awake()
@@ -23,14 +28,26 @@ public class Letter : MonoBehaviour
         red = false;
 
         underLine = transform.GetChild(0).GetComponent<RectTransform>();
+
+        rect = GetComponent<RectTransform>();
+
+        spawnPos = new Vector3(0, -2.35f, 0);
+
+        mesh = tmpText.mesh;
         //Debug.Log(Screen.width);
         //Debug.Log(Screen.height);
+    }
+
+    private void OnEnable()
+    {
+
     }
 
     // Update is called once per frame
     void Update()
     {
         textIdleEffect();
+        //TextSpawn();
         UnderLineFollow();
         Green();
         if (red)
@@ -44,6 +61,68 @@ public class Letter : MonoBehaviour
     private void LateUpdate()
     {
         tmpText.canvasRenderer.SetMesh(mesh);
+    }
+
+    void TextSpawn()
+    {
+        mesh = tmpText.mesh;
+        vertices = mesh.vertices;
+        Debug.Log(vertices.Length);
+        for(int i = 0; i < tmpText.textInfo.characterCount; i++)
+        {
+
+            TMP_CharacterInfo c = tmpText.textInfo.characterInfo[i];
+
+            if (!c.isVisible)
+            {
+                continue;
+            }
+
+            int index = c.vertexIndex;
+
+            /* Vector3 lerpPos = new Vector3(Mathf.Lerp(transform.InverseTransformPoint(spawnPos).x, transform.InverseTransformPoint(ogPos).x, Time.time + i),
+                 Mathf.Lerp(transform.InverseTransformPoint(spawnPos).y, transform.InverseTransformPoint(ogPos).y, Time.time + i), 0);*/
+
+            //vertices[index + 0] = Vector3.Lerp(new Vector3(0, -220, 0), ogPos[index + 0], Time.time + i);
+           // vertices[index + 1] = Vector3.Lerp(new Vector3(0, -220, 0), ogPos[index + 1], Time.time + i);
+           // vertices[index + 2] = Vector3.Lerp(new Vector3(0, -220, 0), ogPos[index + 2], Time.time + i);
+           // vertices[index + 3] = Vector3.Lerp(new Vector3(0, -220, 0), ogPos[index + 3], Time.time + i);
+            for (int j = 0; j < 4; j++)
+            {
+                Debug.Log(ogPos.Length);
+                if(ogPos.Length == 0)
+                {
+                    return;
+                }
+                Vector3 lerpPos = Vector3.Lerp(new Vector3(0, -220,0), ogPos[index + j], Time.time * i);
+
+                //Debug.Log(ogPos);
+                //Debug.Log(rect.InverseTransformPoint(spawnPos));
+
+                vertices[index + j] = lerpPos;
+            }
+
+
+        }
+        mesh.vertices = vertices;
+    }
+
+    void TextFade()
+    {
+        tmpText.ForceMeshUpdate();
+        colors = mesh.colors;
+
+        for(int i = 0; i < tmpText.textInfo.characterCount; i++)
+        {
+            TMP_CharacterInfo c = tmpText.textInfo.characterInfo[i];
+
+            int index = c.vertexIndex;
+
+            colors[index] = new Color(colors[index].r, colors[index].g, colors[index].b, colors[index].a);
+            colors[index + 1] = Color.green;
+            colors[index + 2] = Color.green;
+            colors[index + 3] = Color.green;
+        }
     }
 
     void UnderLineFollow()
@@ -65,6 +144,7 @@ public class Letter : MonoBehaviour
     void textIdleEffect()
     {
         tmpText.ForceMeshUpdate();
+        //Debug.Log(tmpText.mesh.vertices.Length);
         mesh = tmpText.mesh;
         vertices = mesh.vertices;
 
@@ -142,6 +222,7 @@ public class Letter : MonoBehaviour
         if(tmpText != null)
         {
             tmpText.text = newText;
+            ogPos = tmpText.mesh.vertices;
         }
     }
 
