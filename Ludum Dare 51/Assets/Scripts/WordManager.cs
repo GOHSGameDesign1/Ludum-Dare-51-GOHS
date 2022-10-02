@@ -115,6 +115,7 @@ public class WordManager : MonoBehaviour
         {
             Debug.Log("Out of words!");
             StopAllCoroutines();
+            NextLevel();
             yield break;
         }
 
@@ -159,5 +160,10 @@ public class WordManager : MonoBehaviour
 
         Destroy(currentWord.gameObject);
 
+    }
+
+    void NextLevel()
+    {
+        Debug.Log("New Level");
     }
 }
