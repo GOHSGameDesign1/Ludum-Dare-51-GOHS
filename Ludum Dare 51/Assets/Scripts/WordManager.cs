@@ -11,6 +11,7 @@ public class WordManager : MonoBehaviour
     private string currentLetters;
     public static int letterIndex;
     private bool currentLetterCorrect;
+    private bool firstWord = true;
 
     public List<string> words;
     public Canvas wordCanvas;
@@ -125,15 +126,19 @@ public class WordManager : MonoBehaviour
     // loads a new word
     void SetupNextWord(string word)
     {
-
+        if (!firstWord)
+        {
+            GameObject.Find("CorrectEffect").GetComponent<ParticleSystem>().Play();
+        }
+        firstWord = false;
         words.RemoveAt(0);
 
         //for (int i = 0; i < word.Length; i++)
         //{
-           // Letter currentLetter = Instantiate(letterPrefab, new Vector2((float)(word.Length * -1) / 2 + i, 0), Quaternion.identity, transform).GetComponent<Letter>();
-            //currentLetter.ChangeText(word[i].ToString());
-            //currentWordList.Add(currentLetter);
-       // }
+        // Letter currentLetter = Instantiate(letterPrefab, new Vector2((float)(word.Length * -1) / 2 + i, 0), Quaternion.identity, transform).GetComponent<Letter>();
+        //currentLetter.ChangeText(word[i].ToString());
+        //currentWordList.Add(currentLetter);
+        // }
 
         currentWord = Instantiate(letterPrefab, wordCanvas.transform).GetComponent<TMP_Text>();
         //currentWord.GetComponent<Letter>().ChangeText(word);
@@ -144,7 +149,6 @@ public class WordManager : MonoBehaviour
         currentWord.GetComponent<Letter>().ogPos = currentWord.mesh.vertices;
         Debug.Log(currentLetters);
         //Debug.Log(currentWord.mesh.vertices);
-
         StopAllCoroutines();
         StartCoroutine(Timer.Countdown());
         StartCoroutine(CheckLetters());

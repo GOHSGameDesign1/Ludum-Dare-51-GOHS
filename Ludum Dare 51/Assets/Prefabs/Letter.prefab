@@ -271,3 +271,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tmpText: {fileID: 0}
+  red: 0
+  ogPos: []
