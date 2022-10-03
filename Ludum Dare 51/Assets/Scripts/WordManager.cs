@@ -18,7 +18,11 @@ public class WordManager : MonoBehaviour
     private List<List<string>> levels;
     public List<string> level1;
     public List<string> level2;
+    public List<string> level3;
+    public List<string> level4;
+    public List<string> level5;
     private int levelCounter;
+    private bool levelComplete;
 
     public Canvas wordCanvas;
 
@@ -33,8 +37,13 @@ public class WordManager : MonoBehaviour
         levels = new List<List<string>>();
         levels.Add(level1);
         levels.Add(level2);
+        levels.Add(level3);
+        levels.Add(level4);
+        levels.Add(level5);
+        levelComplete = false;
+
         levelCounter = 0;
-        StartCoroutine(NextLevel());
+        //StartCoroutine(NextLevel());
 
         letterIndex = 0;
         currentLetterCorrect = false;
@@ -59,6 +68,14 @@ public class WordManager : MonoBehaviour
     // checks if the keypressed was the correct letter at the correct index
     void CheckLetterCorrect(char a)
     {
+        if (!GameManager.gameStart)
+        {
+            return;
+        }
+        if (levelComplete)
+        {
+            return;
+        }
 
         if (KeyboardManager.currentKey.ToString().ToUpper() == currentWord.text[letterIndex].ToString())
         {
@@ -128,6 +145,7 @@ public class WordManager : MonoBehaviour
         if (currentLevelWords.Count == 0)
         {
             Debug.Log("Out of words!");
+            levelComplete = true;
             StopAllCoroutines();
             StartCoroutine(NextLevel());
             yield break;
@@ -178,8 +196,9 @@ public class WordManager : MonoBehaviour
 
     }
 
-    IEnumerator NextLevel()
+    public IEnumerator NextLevel()
     {
+        levelComplete = true;
         Debug.Log("New Level");
         //currentLevelWords = words;
         currentLevelWords.Clear();
@@ -192,9 +211,10 @@ public class WordManager : MonoBehaviour
             currentLevelUp.Die();
         }
 
-        if(levelCounter == 2)
+        if(levelCounter == 5)
         {
             Debug.Log("Out of Levels");
+            StartCoroutine(GameObject.Find("GameManager").GetComponent<GameManager>().Win());
             yield break;
         }
 
@@ -204,6 +224,7 @@ public class WordManager : MonoBehaviour
             currentLevelWords.Add(levels[levelCounter][i]);
             //Debug.Log(currentLevelWords[i]);
         }
+        levelComplete = false;
         levelCounter++;
         SetupNextWord(currentLevelWords[0]);
     }

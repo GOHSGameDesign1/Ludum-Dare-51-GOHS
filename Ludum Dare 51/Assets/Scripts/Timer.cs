@@ -24,9 +24,13 @@ public class Timer : MonoBehaviour
         timerRing.fillAmount = Mathf.Lerp(timerRing.fillAmount, timer/10, lerpSpeed * Time.deltaTime);
         ColorChanger();
 
-        if(timer <= 0)
+        if (GameManager.gameStart)
         {
-            Debug.Log("DEAD!!!!!");
+            if (timer <= 0)
+            {
+                Debug.Log("DEAD!!!!!");
+                StartCoroutine(GameManager.KillHenry());
+            }
         }
     }
 
