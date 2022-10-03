@@ -173,7 +173,7 @@ public class WordManager : MonoBehaviour
     {
         letterIndex = 0;
 
-        Destroy(currentWord.gameObject);
+        currentWord.GetComponent<Letter>().Die();
 
     }
 
@@ -182,6 +182,12 @@ public class WordManager : MonoBehaviour
         Debug.Log("New Level");
         //currentLevelWords = words;
         currentLevelWords.Clear();
+
+        if(levelCounter == 2)
+        {
+            Debug.Log("Out of Levels");
+            return;
+        }
 
 
         for(int i = 0; i < levels[levelCounter].Count; i++)

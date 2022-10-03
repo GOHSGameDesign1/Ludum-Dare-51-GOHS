@@ -228,5 +228,11 @@ public class Letter : MonoBehaviour
         return new Vector2(Mathf.Sin(time * 5.3f), Mathf.Cos(time * 5.3f));
     }
 
+    public void Die()
+    {
+        Instantiate(deathParticles, new Vector3(0,0,0), Quaternion.Euler(-90, 0, 0));
+        Destroy(gameObject);
+    }
+
 
 }

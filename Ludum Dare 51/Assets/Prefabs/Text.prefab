@@ -99,6 +99,7 @@ MonoBehaviour:
   tmpText: {fileID: 0}
   red: 0
   ogPos: []
+  deathParticles: {fileID: 6693313997821310436, guid: 5a8bbb9f00c78fc4eaf037e3ad2f6b19, type: 3}
 --- !u!222 &-4305285009964048347
 CanvasRenderer:
   m_ObjectHideFlags: 0
