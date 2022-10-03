@@ -9,6 +9,7 @@ public class Letter : MonoBehaviour
     Mesh mesh;
     Mesh colorMesh;
     public bool red;
+    public bool isInteractable;
     RectTransform underLine;
 
     Vector3[] vertices;
@@ -27,13 +28,17 @@ public class Letter : MonoBehaviour
     {
         tmpText = GetComponent<TMP_Text>();
         render = GetComponent<SpriteRenderer>();
-        red = false;
 
-        underLine = transform.GetChild(0).GetComponent<RectTransform>();
+        if (isInteractable)
+        {
+            red = false;
 
-        rect = GetComponent<RectTransform>();
+            underLine = transform.GetChild(0).GetComponent<RectTransform>();
 
-        spawnPos = new Vector3(0, -2.35f, 0);
+            rect = GetComponent<RectTransform>();
+
+            spawnPos = new Vector3(0, -2.35f, 0);
+        }
 
         mesh = tmpText.mesh;
         //Debug.Log(Screen.width);
@@ -45,11 +50,14 @@ public class Letter : MonoBehaviour
     {
         textIdleEffect();
         //TextSpawn();
-        UnderLineFollow();
-        Green();
-        if (red)
+        if (isInteractable)
         {
-            Red();
+            UnderLineFollow();
+            Green();
+            if (red)
+            {
+                Red();
+            }
         }
 
         

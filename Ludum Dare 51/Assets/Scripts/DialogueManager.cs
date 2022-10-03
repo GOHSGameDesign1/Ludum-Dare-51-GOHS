@@ -10,12 +10,14 @@ public class DialogueManager : MonoBehaviour
     public Text dialogueText;
     public Animator animator;
     public float delay = 0.05f;
+    public static bool playingDialogue;
     private Queue<string> sentences;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         sentences = new Queue<string>();
+        playingDialogue = false;
     }
     public void StartDialogue(Dialogue dialogue) {
 

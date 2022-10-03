@@ -23,6 +23,7 @@ public class WordManager : MonoBehaviour
     public Canvas wordCanvas;
 
     public GameObject letterPrefab;
+    public GameObject levelUpPrefab;
     private WaitForFixedUpdate waitTime = new WaitForFixedUpdate();
 
     // Start is called before the first frame update
@@ -33,7 +34,7 @@ public class WordManager : MonoBehaviour
         levels.Add(level1);
         levels.Add(level2);
         levelCounter = 0;
-        NextLevel();
+        StartCoroutine(NextLevel());
 
         letterIndex = 0;
         currentLetterCorrect = false;
@@ -128,7 +129,7 @@ public class WordManager : MonoBehaviour
         {
             Debug.Log("Out of words!");
             StopAllCoroutines();
-            NextLevel();
+            StartCoroutine(NextLevel());
             yield break;
         }
 
@@ -177,16 +178,24 @@ public class WordManager : MonoBehaviour
 
     }
 
-    void NextLevel()
+    IEnumerator NextLevel()
     {
         Debug.Log("New Level");
         //currentLevelWords = words;
         currentLevelWords.Clear();
 
+
+        if(levelCounter != 0)
+        {
+            Letter currentLevelUp = Instantiate(levelUpPrefab, wordCanvas.transform).GetComponent<Letter>();
+            yield return new WaitForSeconds(3f);
+            currentLevelUp.Die();
+        }
+
         if(levelCounter == 2)
         {
             Debug.Log("Out of Levels");
-            return;
+            yield break;
         }
 
 
