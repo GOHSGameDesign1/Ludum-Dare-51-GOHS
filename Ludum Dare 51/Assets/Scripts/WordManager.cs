@@ -8,13 +8,18 @@ public class WordManager : MonoBehaviour
 {
     private List<Letter> currentWordList = new List<Letter>();
     private TMP_Text currentWord;
+    public TMP_Text wordCountUI;
     private string currentLetters;
     public static int letterIndex;
     private bool currentLetterCorrect;
 
     [SerializeField]
     private List<string> currentLevelWords;
-    public List<string> words;
+    private List<List<string>> levels;
+    public List<string> level1;
+    public List<string> level2;
+    private int levelCounter;
+
     public Canvas wordCanvas;
 
     public GameObject letterPrefab;
@@ -24,7 +29,12 @@ public class WordManager : MonoBehaviour
     void Awake()
     {
         currentLevelWords = new List<string>();
+        levels = new List<List<string>>();
+        levels.Add(level1);
+        levels.Add(level2);
+        levelCounter = 0;
         NextLevel();
+
         letterIndex = 0;
         currentLetterCorrect = false;
     }
@@ -131,6 +141,7 @@ public class WordManager : MonoBehaviour
 
         currentLevelWords.RemoveAt(0);
         Debug.Log("words left: " + currentLevelWords.Count);
+        wordCountUI.text = "Words left: " + currentLevelWords.Count.ToString();
 
         //for (int i = 0; i < word.Length; i++)
         //{
@@ -172,11 +183,13 @@ public class WordManager : MonoBehaviour
         //currentLevelWords = words;
         currentLevelWords.Clear();
 
-        for(int i = 0; i < words.Count; i++)
+
+        for(int i = 0; i < levels[levelCounter].Count; i++)
         {
-            currentLevelWords.Add(words[i]);
+            currentLevelWords.Add(levels[levelCounter][i]);
             //Debug.Log(currentLevelWords[i]);
         }
+        levelCounter++;
         SetupNextWord(currentLevelWords[0]);
     }
 }

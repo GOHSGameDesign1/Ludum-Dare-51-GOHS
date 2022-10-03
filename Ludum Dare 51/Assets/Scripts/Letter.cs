@@ -20,6 +20,8 @@ public class Letter : MonoBehaviour
     RectTransform rect;
 
     private SpriteRenderer render;
+
+    public ParticleSystem deathParticles;
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,11 +38,6 @@ public class Letter : MonoBehaviour
         mesh = tmpText.mesh;
         //Debug.Log(Screen.width);
         //Debug.Log(Screen.height);
-    }
-
-    private void OnEnable()
-    {
-
     }
 
     // Update is called once per frame
