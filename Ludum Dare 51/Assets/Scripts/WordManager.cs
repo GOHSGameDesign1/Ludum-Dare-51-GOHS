@@ -214,6 +214,7 @@ public class WordManager : MonoBehaviour
         if(levelCounter == 5)
         {
             Debug.Log("Out of Levels");
+            GameManager.wonGame = true;
             StartCoroutine(GameObject.Find("GameManager").GetComponent<GameManager>().Win());
             yield break;
         }

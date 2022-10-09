@@ -8,7 +8,9 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static bool gameStart;
+    public static bool wonGame;
     public InputAction startAction;
+    public InputAction resetAction;
     public static GameObject henry;
     public static GameObject gameOverPanel;
     public static bool isDead;
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         gameStart = false;
+        wonGame = false;
         henry = GameObject.Find("henry");
         gameOverPanel = GameObject.Find("Game");
         isDead = false;
@@ -33,12 +36,18 @@ public class GameManager : MonoBehaviour
     {
         startAction.Enable();
         startAction.performed += StartGame;
+
+        resetAction.Enable();
+        resetAction.performed += ResetGame;
     }
 
     private void OnDisable()
     {
         startAction.Disable();
         startAction.performed -= StartGame;
+
+        resetAction.Disable();
+        resetAction.performed -= ResetGame;
     }
 
     // Update is called once per frame
@@ -49,11 +58,6 @@ public class GameManager : MonoBehaviour
 
     void StartGame(InputAction.CallbackContext context)
     {
-        if (isDead)
-        {
-            SceneManager.LoadScene(0);
-            return;
-        }
 
         if (gameStart)
         {
@@ -66,9 +70,20 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public static void deadGame()
+    void ResetGame(InputAction.CallbackContext context)
     {
-        
+        if (isDead)
+        {
+            SceneManager.LoadScene(0);
+            return;
+        }
+
+        if (wonGame)
+        {
+            SceneManager.LoadScene(0);
+            return;
+        }
+
     }
 
     public static IEnumerator KillHenry()
