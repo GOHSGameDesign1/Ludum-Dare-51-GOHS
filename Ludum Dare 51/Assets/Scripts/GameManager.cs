@@ -64,9 +64,10 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        gameStart = true;
+        
         tutorialText.gameObject.SetActive(false);
         StartCoroutine(GetComponent<WordManager>().NextLevel());
+        gameStart = true;
 
     }
 
