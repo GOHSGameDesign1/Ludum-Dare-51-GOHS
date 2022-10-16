@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 135239749}
   - component: {fileID: 135239748}
   - component: {fileID: 135239750}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cauldron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -382,7 +382,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: -6
   m_TargetDisplay: 0
 --- !u!224 &214767184
 RectTransform:
@@ -1319,7 +1319,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: deaf7c8fb4173964e994e666e14aefc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1777,8 +1777,8 @@ Canvas:
   m_GameObject: {fileID: 1291585297}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1787,7 +1787,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -5
   m_TargetDisplay: 0
 --- !u!224 &1291585301
 RectTransform:
@@ -21933,11 +21933,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8544347997211193546, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_text
-      value: wewewewewewwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdw
+      value: HELLO
+      objectReference: {fileID: 0}
+    - target: {fileID: -8544347997211193546, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
+      propertyPath: m_fontSize
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8544347997211193546, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_margin.z
       value: 0.09247249
+      objectReference: {fileID: 0}
+    - target: {fileID: -8544347997211193546, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8544347997211193546, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_enableWordWrapping
@@ -21981,11 +21989,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2849323620785955065, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 433.6181
+      value: 56.3619
       objectReference: {fileID: 0}
     - target: {fileID: 2849323620785955065, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 173.2154
+      value: 16.31
       objectReference: {fileID: 0}
     - target: {fileID: 2849323620785955065, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22017,11 +22025,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2849323620785955065, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -14.73
+      value: -0.00099182
       objectReference: {fileID: 0}
     - target: {fileID: 2849323620785955065, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -111.4095
+      value: -6.37
       objectReference: {fileID: 0}
     - target: {fileID: 2849323620785955065, guid: d422d46bd1bcea948a384934cbb3a7ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
