@@ -30,6 +30,8 @@ public class WordManager : MonoBehaviour
     public GameObject levelUpPrefab;
     private WaitForFixedUpdate waitTime = new WaitForFixedUpdate();
 
+    bool keyboardSetUp; // This is a bandaid fix ~~~~~~~~~~~~~~~~~~~~~~ TODO: Make this an event from gameManager to start the game instead of a bool;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -47,17 +49,23 @@ public class WordManager : MonoBehaviour
 
         letterIndex = 0;
         currentLetterCorrect = false;
+
+        keyboardSetUp = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (GameManager.gameStart && keyboardSetUp == false)
+        {
+            KeyboardManager.keyPressed += CheckLetterCorrect;
+            keyboardSetUp = true;
+        }
     }
 
     private void OnEnable()
     {
-        KeyboardManager.keyPressed += CheckLetterCorrect;
+        
     }
 
     private void OnDisable()
