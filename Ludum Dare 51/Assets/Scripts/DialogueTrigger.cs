@@ -9,6 +9,11 @@ public class DialogueTrigger : MonoBehaviour
 
     public Dialogue henryDialogue1;
 
+    private void Start()
+    {
+        TriggerDialogue();
+    }
+
     public void TriggerDialogue() {
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using TMPro;
+
 public class DialogueManager : MonoBehaviour
 {
 
-    public Text nameText;
-    public Text dialogueText;
+    public TMP_Text nameText;
+    public TMP_Text dialogueText;
     public Animator animator;
     public float delay = 0.05f;
     public static bool playingDialogue;
@@ -21,7 +23,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartDialogue(Dialogue dialogue) {
 
-        animator.SetBool("IsOpen", true);
+        //animator.SetBool("IsOpen", true);
         nameText.text = dialogue.name;
         sentences.Clear();
         foreach (string sentence in dialogue.sentences) {
@@ -47,6 +49,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
     void EndDialogue() {
-        animator.SetBool("IsOpen", false);
+        //animator.SetBool("IsOpen", false);
     }
 }
